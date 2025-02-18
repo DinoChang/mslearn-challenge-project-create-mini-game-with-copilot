@@ -1,4 +1,5 @@
 import random
+import keyboard
 
 def get_computer_choice():
     return random.choice(['rock', 'paper', 'scissors'])
@@ -13,16 +14,28 @@ def determine_winner(player_choice, computer_choice):
     else:
         return '電腦贏'
 
+def map_arrow_keys_to_choice():
+    if keyboard.is_pressed('up'):
+        return 'rock'
+    elif keyboard.is_pressed('left'):
+        return 'paper'
+    elif keyboard.is_pressed('right'):
+        return 'scissors'
+    return None
+
 def main():
     print("歡迎來到剪刀、石頭、布小遊戲！")
-    print("輸入 'rock'、'paper'、'scissors' 來玩，輸入 'bye' 來結束遊戲。")
+    print("使用方向鍵快速選擇：上鍵 = 石頭，左鍵 = 布，右鍵 = 剪刀。")
+    print("輸入 'bye' 來結束遊戲。")
 
     rounds = 0
     player_wins = 0
     computer_wins = 0
 
     while True:
-        player_choice = input("請輸入你的選擇：").lower()
+        player_choice = map_arrow_keys_to_choice()
+        if player_choice is None:
+            player_choice = input("請輸入你的選擇：").lower()
         if player_choice == 'bye':
             break
         if player_choice not in ['rock', 'paper', 'scissors']:
